@@ -22,14 +22,14 @@ body{font-family:'Heebo',Arial,sans-serif;background:#0a0a0a;color:#fff;-webkit-
 .hero{background:radial-gradient(500px 300px at 0% 0%,rgba(255,110,30,.25),transparent 70%),#0f0f0f;border:1px solid #222;border-radius:22px;padding:24px 22px}
 .logo{height:36px;display:block}
 .kick{margin-top:22px;color:#cfcfcf;font-size:16px}
-.pkg{direction:ltr;text-align:right;font-weight:900;line-height:1;margin-top:6px}
-.pkg .a{font-size:30px;letter-spacing:4px;display:block}
+.pkg{text-align:right;font-weight:900;line-height:1;margin-top:6px}
+.pkg .a{font-size:34px;display:block}
 .pkg .b{font-size:52px;background:linear-gradient(135deg,#FFA21A,#FF3D2E);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;padding:0 2px}
 .price{margin-top:18px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .price b{font-size:40px;font-weight:900}
 .price span{color:#cfcfcf;font-size:15px}
 .vat{display:inline-block;background:linear-gradient(135deg,#FFA21A,#FF3D2E);color:#111;font-weight:700;font-size:12.5px;border-radius:99px;padding:3px 10px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+.stats{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:8px;margin-top:18px}
 .stat{background:#151515;border:1px solid #262626;border-radius:14px;padding:10px 12px;border-bottom:3px solid #FF6A26}
 .stat .n{font-size:26px;font-weight:900;color:#FF8A24;direction:ltr;text-align:right}
 .stat .t{font-size:13.5px;font-weight:700}
@@ -83,9 +83,9 @@ if (!DATA.pkg) {
   var h = '';
   h += '<div class="hero"><img class="logo" src="'+DATA.logo+'">';
   h += '<div class="kick">הסכם התקשרות · מסלול ליווי 3 חודשים</div>';
-  h += '<div class="pkg"><span class="a">PURE</span><span class="b">'+p.name+'</span></div>';
+  h += '<div class="pkg"><span class="a">פיור</span><span class="b">'+p.name+'</span></div>';
   h += '<div class="price"><b>'+p.price+' ₪</b><span>לחודש · כולל ניהול קמפיינים ממומנים</span><span class="vat">לא כולל מע״מ</span></div>';
-  h += '<div class="stats">'+p.stats.map(function(s){return '<div class="stat"><div class="n">'+s[0]+'</div><div class="t">'+s[1]+'</div></div>'}).join('')+'</div></div>';
+  h += '<div class="stats" style="--cols:'+p.stats.length+'">'+p.stats.map(function(s){return '<div class="stat"><div class="n">'+s[0]+'</div><div class="t">'+s[1]+'</div></div>'}).join('')+'</div></div>';
   h += '<h2>מה כלול במסלול</h2><ul class="inc">'+p.items.map(function(i){return '<li><span class="ck">'+CK+'</span><span>'+i+'</span></li>'}).join('')+'</ul>';
   h += '<h2>תנאי ההתקשרות</h2>';
   DATA.terms.forEach(function(t,ix){
@@ -116,7 +116,7 @@ if (!DATA.pkg) {
   document.getElementById('go').onclick=function(){
     var v=function(id){return document.getElementById(id).value.trim()};
     var err=document.getElementById('err'); err.textContent='';
-    var f={pkg:p.name,name:v('name'),biz:v('biz'),idn:v('idn'),phone:v('phone'),email:v('email'),ua:navigator.userAgent};
+    var f={pkg:p.key,name:v('name'),biz:v('biz'),idn:v('idn'),phone:v('phone'),email:v('email'),ua:navigator.userAgent};
     if(!f.name||!f.biz||!f.idn||!f.phone||!f.email){err.textContent='נא למלא את כל השדות המסומנים בכוכבית.';return}
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email)){err.textContent='כתובת האימייל אינה תקינה.';return}
     if(!dirty){err.textContent='נא לחתום בתיבת החתימה.';return}
